@@ -2,7 +2,8 @@
 #profile-update-interval: 1
 #subscription-userinfo: upload=29; download=12; total=10737418240000000; expire=2546249531
 #support-url: https://raw.githubusercontent.com/3manvb/sub/main/sub
-#https://raw.githubusercontent.com/3manvb/sub/main/sub
+#profile-web-page-url: 
+https://raw.githubusercontent.com/3manvb/sub/main/sub
 {
   "log": {
     "disabled": true,
