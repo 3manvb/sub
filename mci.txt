@@ -1,6 +1,6 @@
 # تنظیم نام کاربری و نام مخزن گیت‌هاب
 GITHUB_USERNAME="3manvb"
-GITHUB_REPO="sub"
+GITHUB_REPO="mci.txt"
 GITHUB_TOKEN="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"
 
 # آدرس فایلی که می‌خواهید دانلود کنید
