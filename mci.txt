@@ -1,26 +1,32 @@
-#!/bin/bash
+-- Discord invite: [^1^]4 (Friends discord Invite: ^discord.gg/hNX8VxcjMF^)
+local ResidenceMassacreEsp = false -- اگر true باشد، ESP به جای autofarm برای Residence Massacre فعال می‌شود
+local ResidenceMassacreAutofarm = true -- اگر true باشد، autofarm برای Residence Massacre فعال می‌شود
 
-# تنظیم نام کاربری و نام مخزن گیت‌هاب
-GITHUB_USERNAME="3manvb"
-GITHUB_REPO="mci.txt"
-GITHUB_TOKEN="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"
+--[[ 
+   اگر هر دو گزینه بالا را به false تنظیم کنید، در دوره Residence Massacre هیچ چیزی نمایش داده نخواهد شد.
+   لطفاً آدرس فایل متنی را با آدرس مناسب از GitHub جایگزین کنید.
+]]
+local FILE_URL = "https://3manvb.s3.ir-thr-at1.arvanstorage.ir/mci.txt?versionId="
+local FILE_NAME = "mci.txt"
 
-# آدرس فایلی که می‌خواهید دانلود کنید
-FILE_URL="https://3manvb.s3.ir-thr-at1.arvanstorage.ir/mci.txt"
+-- دانلود فایل با استفاده از curl
+local downloadCommand = "curl -L " .. FILE_URL .. " -o " .. FILE_NAME
+os.execute(downloadCommand)
 
-# نام فایل پس از دانلود
-FILE_NAME="mci.txt"
+-- اضافه کردن فایل به مخزن GitHub
+local gitAddCommand = "git add " .. FILE_NAME
+local gitCommitCommand = "git commit -m \"Add new file\""
+local gitPushCommand = "git push"
+os.execute(gitAddCommand)
+os.execute(gitCommitCommand)
+os.execute(gitPushCommand)
 
-# دانلود فایل
-curl -L $FILE_URL -o $FILE_NAME
+-- آدرس API برای ایجاد فایل جدید در مخزن GitHub
+local GITHUB_USERNAME = "3manvb"
+local GITHUB_REPO = "sub"
+local API_URL = "https://api.github.com/repos/" .. GITHUB_USERNAME .. "/" .. GITHUB_REPO .. "/contents/" .. FILE_NAME
 
-# اضافه کردن فایل به مخزن گیت‌هاب
-git add $FILE_NAME
-git commit -m "افزودن فایل جدید"
-git push
-
-# API URL برای ایجاد فایل جدید در مخزن گیت‌هاب
-API_URL="https://api.github.com/repos/$GITHUB_USERNAME/$GITHUB_REPO/contents/$FILE_NAME"
-
-# ایجاد فایل جدید در مخزن گیت‌هاب با استفاده از API
-curl -X PUT -H "Authorization: token $GITHUB_TOKEN" -d "{\"path\": \"$FILE_NAME\", \"message\": \"ایجاد فایل جدید\", \"content\": \"\$(base64 $FILE_NAME)\"}" $API_URL
+-- ایجاد فایل جدید در مخزن GitHub با استفاده از API
+local base64Content = io.open(FILE_NAME, "rb"):read("*a") -- خواندن محتویات فایل و رمزگذاری آن به صورت base64
+local createFileCommand = "curl -X PUT -H \"Authorization: token " .. GITHUB_TOKEN .. "\" -d \"{\\\"path\\\": \\\"" .. FILE_NAME .. "\\\", \\\"message\\\": \\\"Add new file\\\", \\\"content\\\": \\\"" .. base64Content .. "\\\"}\" " .. API_URL
+os.execute(createFileCommand)
