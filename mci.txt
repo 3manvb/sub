@@ -1,32 +1,32 @@
--- Discord invite: [^1^]4 (Friends discord Invite: ^discord.gg/hNX8VxcjMF^)
-local ResidenceMassacreEsp = false -- اگر true باشد، ESP به جای autofarm برای Residence Massacre فعال می‌شود
-local ResidenceMassacreAutofarm = true -- اگر true باشد، autofarm برای Residence Massacre فعال می‌شود
+#!/bin/bash
 
---[[ 
-   اگر هر دو گزینه بالا را به false تنظیم کنید، در دوره Residence Massacre هیچ چیزی نمایش داده نخواهد شد.
-   لطفاً آدرس فایل متنی را با آدرس مناسب از GitHub جایگزین کنید.
-]]
-local FILE_URL = "https://3manvb.s3.ir-thr-at1.arvanstorage.ir/mci.txt?versionId="
-local FILE_NAME = "mci.txt"
+# تنظیم متغیرهای مورد نیاز
+GITHUB_USERNAME="3manvb"
+GITHUB_REPO="sub"
+GITHUB_TOKEN="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"
+FILE_PATH="mci.txt"
+SOURCE_URL="https://3manvb.s3.ir-thr-at1.arvanstorage.ir/mci.txt"
 
--- دانلود فایل با استفاده از curl
-local downloadCommand = "curl -L " .. FILE_URL .. " -o " .. FILE_NAME
-os.execute(downloadCommand)
+# دانلود محتویات فایل از آدرس اول
+content=$(curl -s $SOURCE_URL)
 
--- اضافه کردن فایل به مخزن GitHub
-local gitAddCommand = "git add " .. FILE_NAME
-local gitCommitCommand = "git commit -m \"Add new file\""
-local gitPushCommand = "git push"
-os.execute(gitAddCommand)
-os.execute(gitCommitCommand)
-os.execute(gitPushCommand)
+# تبدیل محتویات فایل به فرمت base64
+encoded_content=$(echo -n "$content" | base64)
 
--- آدرس API برای ایجاد فایل جدید در مخزن GitHub
-local GITHUB_USERNAME = "3manvb"
-local GITHUB_REPO = "sub"
-local API_URL = "https://api.github.com/repos/" .. GITHUB_USERNAME .. "/" .. GITHUB_REPO .. "/contents/" .. FILE_NAME
+# ایجاد JSON برای درخواست API
+json=$(cat <<EOF
+{
+  "message": "update file",
+  "committer": {
+    "name": "$GITHUB_USERNAME",
+    "email": "youremail@example.com"
+  },
+  "content": "$encoded_content"
+}
+EOF
+)
 
--- ایجاد فایل جدید در مخزن GitHub با استفاده از API
-local base64Content = io.open(FILE_NAME, "rb"):read("*a") -- خواندن محتویات فایل و رمزگذاری آن به صورت base64
-local createFileCommand = "curl -X PUT -H \"Authorization: token " .. GITHUB_TOKEN .. "\" -d \"{\\\"path\\\": \\\"" .. FILE_NAME .. "\\\", \\\"message\\\": \\\"Add new file\\\", \\\"content\\\": \\\"" .. base64Content .. "\\\"}\" " .. API_URL
-os.execute(createFileCommand)
+# ارسال درخواست به API گیت‌هاب برای ایجاد یا به‌روزرسانی فایل
+curl -X PUT -H "Authorization: token $GITHUB_TOKEN" \
+     -d "$json" \
+     https://api.github.com/repos/$GITHUB_USERNAME/$GITHUB_REPO/contents/$FILE_PATH
