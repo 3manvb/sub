@@ -1,13 +1,13 @@
 # تنظیم نام کاربری و نام مخزن گیت‌هاب
 GITHUB_USERNAME="3manvb"
 GITHUB_REPO="sub"
-GITHUB_TOKEN=""
+GITHUB_TOKEN="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"
 
 # آدرس فایلی که می‌خواهید دانلود کنید
 FILE_URL="https://3manvb.s3.ir-thr-at1.arvanstorage.ir/mci.txt?versionId="
 
 # نام فایل پس از دانلود
-FILE_NAME="sub.txt"
+FILE_NAME="sub"
 
 # دانلود فایل
 curl -L $FILE_URL -o $FILE_NAME
