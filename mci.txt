@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # تنظیم نام کاربری و نام مخزن گیت‌هاب
 GITHUB_USERNAME="3manvb"
 GITHUB_REPO="mci.txt"
@@ -21,4 +23,4 @@ git push
 API_URL="https://api.github.com/repos/$GITHUB_USERNAME/$GITHUB_REPO/contents/$FILE_NAME"
 
 # ایجاد فایل جدید در مخزن گیت‌هاب با استفاده از API
-curl -X PUT -H "Authorization: token $GITHUB_TOKEN" -d "{\"path\": \"$FILE_NAME\", \"message\": \"ایجاد فایل جدید\", \"content\": \"$(base64 $FILE_NAME)\"}" $API_URL
+curl -X PUT -H "Authorization: token $GITHUB_TOKEN" -d "{\"path\": \"$FILE_NAME\", \"message\": \"ایجاد فایل جدید\", \"content\": \"\$(base64 $FILE_NAME)\"}" $API_URL
