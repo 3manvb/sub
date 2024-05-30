@@ -7,7 +7,7 @@ GITHUB_TOKEN="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"
 FILE_URL="https://3manvb.s3.ir-thr-at1.arvanstorage.ir/mci.txt?versionId="
 
 # نام فایل پس از دانلود
-FILE_NAME="sub"
+FILE_NAME="sub.txt"
 
 # دانلود فایل
 curl -L $FILE_URL -o $FILE_NAME
