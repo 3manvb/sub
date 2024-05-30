@@ -19,7 +19,7 @@ json=$(cat <<EOF
   "message": "update file",
   "committer": {
     "name": "$GITHUB_USERNAME",
-    "email": "youremail@example.com"
+    "email": "iman.abkar.67@gmail.com"
   },
   "content": "$encoded_content"
 }
